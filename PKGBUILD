@@ -21,8 +21,8 @@
 # meta-package so that it would render *any* text at all.
 
 pkgname=seihou-shuusou-gyoku
-pkgver=P0303
-pkgrel=2
+pkgver=P0309
+pkgrel=1
 pkgdesc='First game of the Seihou project; ReC98 source port, engine only'
 arch=('x86_64' 'i686')
 url='https://github.com/nmlgc/ssg'
@@ -41,8 +41,9 @@ depends=(
 	'libblake3'
 	'libc++'
 	'libvorbis'
+	'libwebp'
 	'pango'
-	'sdl2'
+	'sdl3'
 	'ttf-font'
 )
 optdepends=(
@@ -50,14 +51,14 @@ optdepends=(
 	"ttf-ms-win11-auto-japanese: Extracts MS Gothic from a Windows 11 ISO"
 	"ttf-ms-win10-cdn-japanese: Downloads MS Gothic from IPFS"
 )
-source=("git+https://github.com/nmlgc/ssg.git#tag=$pkgver-2")
+source=("git+https://github.com/nmlgc/ssg.git#tag=$pkgver")
 b2sums=('SKIP')
 _skel=/usr/share/$pkgname/skel
 
 build() {
 	cd "$srcdir/ssg"
 	export PATH_SKELETON="$_skel"
-	export APP_NAME="$pkgname"
+	export APP_ID="$pkgname"
 
 	# Unconditionally updating without a preceding `git submodule init` does
 	# the right thing in all cases:
@@ -71,10 +72,10 @@ build() {
 	# `-Wp,-D_FORTIFY_SOURCE=3` currently clashes with the std.compat module:
 	#
 	# 	https://github.com/llvm/llvm-project/issues/121709
-	CFLAGS="${CFLAGS//-Wp,-D_FORTIFY_SOURCE=3/}" LFLAGS=$LDFLAGS ./build.sh "bin/GIAN07"
+	CFLAGS="${CFLAGS//-Wp,-D_FORTIFY_SOURCE=3/}" LFLAGS=$LDFLAGS ./build_linux.sh sdl3 "bin/GIAN07"
 }
 
 package() {
 	cd "$srcdir/ssg"
-	ROOT="$pkgdir/usr" PATH_SKELETON="$pkgdir$_skel" ./install.sh "$pkgname"
+	ROOT="$pkgdir/usr" PATH_SKELETON="$pkgdir$_skel" ./install_linux.sh "$pkgname"
 }
