@@ -21,8 +21,8 @@
 # meta-package so that it would render *any* text at all.
 
 pkgname=seihou-shuusou-gyoku
-pkgver=P0309
-pkgrel=1
+pkgver=P0310
+pkgrel=2
 pkgdesc='First game of the Seihou project; ReC98 source port, engine only'
 arch=('x86_64' 'i686')
 url='https://github.com/nmlgc/ssg'
@@ -51,7 +51,7 @@ optdepends=(
 	"ttf-ms-win11-auto-japanese: Extracts MS Gothic from a Windows 11 ISO"
 	"ttf-ms-win10-cdn-japanese: Downloads MS Gothic from IPFS"
 )
-source=("git+https://github.com/nmlgc/ssg.git#tag=$pkgver")
+source=("git+https://github.com/nmlgc/ssg.git#tag=$pkgver-1")
 b2sums=('SKIP')
 _skel=/usr/share/$pkgname/skel
 
